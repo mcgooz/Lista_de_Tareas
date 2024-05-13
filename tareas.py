@@ -260,10 +260,7 @@ def opcion_completar(lista_tareas):
             elif resultado == "tarea_ya_completada":
                 aviso = f"{resetear_linea}{Avisos.aviso(resultado, tarea)}"
                 visualizacion(lista_tareas, aviso)
-                if len(lista_tareas.tareas) == 1:
-                    break
-                else:
-                    continue
+                break
             # Si la tarea aparece en la lista, marcar como completada.
             else:
                 # Usar random choice para añadir un mensaje de ánimo al aviso :)
