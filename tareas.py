@@ -144,9 +144,7 @@ resetear_linea = "\033[F\033[K"
 
 
 # Mantener una visualizacion limpia y dinámica.
-def visualizacion(
-    lista_tareas, aviso=None
-):  # Inicializar input de aviso a None para cuando no sea necesario.
+def visualizacion(lista_tareas, aviso=None):  # Inicializar input de aviso a None para la primera visualización de main.
     print(resetear_pantalla)
     print(f"### LISTA DE TAREAS ###\n")
     print(f"====| {date.today()} |====\n")
@@ -176,10 +174,10 @@ def opciones():
 
 
 def main():
-    # Llamar clase lista de tareas.
+    # Llamar clase lista de tareas con nombre de archivo json.
     lista_tareas = Lista_de_tareas("datos.json")
 
-    # Bucle while permite que el programa sigue abierto hasta que se selccione la opción Salir.
+    # Bucle while permite que el programa sigue abierto hasta que se selccione la opción de salir.
     while True:
         visualizacion(lista_tareas)
         print(f"Por favor, elige una opcion (1-4): ", end="")
@@ -226,7 +224,7 @@ def opcion_agregar(lista_tareas):
 
 
 def opcion_completar(lista_tareas):
-    # List de mensajes de ánimo al completar una tarea.
+    # Lista de mensajes de ánimo.
     animos = [
         "¡Enhorabuena!",
         "¡Bien hecho!",
@@ -250,11 +248,11 @@ def opcion_completar(lista_tareas):
             return
         else:
             resultado, tarea = lista_tareas.completar(completada)
-            # Si el metodo devuelve aviso no_encontrada, avisar y intenta de nuevo
+            # Si el metodo devuelve el aviso no_encontrada, avisar y intentar de nuevo
             if resultado == "tarea_no_encontrada":
                 aviso = f"{resetear_linea}{Avisos.aviso(resultado, tarea)}"
                 visualizacion(lista_tareas, aviso)
-            # Si el metodo devuelve aviso numero_invalido, avisar y intenta de nuevo
+            # Si el metodo devuelve el aviso numero_invalido, avisar y intentar de nuevo
             elif resultado == "numero_invalido":
                 aviso = f"{resetear_linea}{Avisos.aviso(resultado, tarea)}"
                 visualizacion(lista_tareas, aviso)
