@@ -245,21 +245,22 @@ def opcion_completar(lista_tareas):
             return
         else:
             resultado, tarea = lista_tareas.completar(completada)
-            # Si el metodo devuelve el aviso no_encontrada, avisar y intentar de nuevo
+            # Si el resultado es no_encontrada, avisar y intentar de nuevo
             if resultado == "tarea_no_encontrada":
                 aviso = f"{resetear_linea}{Avisos.aviso(resultado, tarea)}"
                 visualizacion(lista_tareas, aviso)
-            # Si el metodo devuelve el aviso numero_invalido, avisar y intentar de nuevo
+            # Si el resultado es numero_invalido, avisar y intentar de nuevo
             elif resultado == "numero_invalido":
                 aviso = f"{resetear_linea}{Avisos.aviso(resultado, tarea)}"
                 visualizacion(lista_tareas, aviso)
+            # Si la tarea ya ha sido marcada como completada, avisar y volver a pantalla principal.
             elif resultado == "tarea_ya_completada":
                 aviso = f"{resetear_linea}{Avisos.aviso(resultado, tarea)}"
                 visualizacion(lista_tareas, aviso)
                 break
-            # Si la tarea aparece en la lista, marcar como completada.
+            # Si la tarea aparece en la lista, marcar como completada y volver.
             else:
-                # Usar random choice para añadir un mensaje de ánimo al aviso :)
+                # Utilizar random choice para añadir un mensaje de ánimo al aviso :)
                 aviso = f"{resetear_linea}{Avisos.aviso(resultado, tarea)} {random.choice(animos)}"
                 visualizacion(lista_tareas, aviso)
                 break
