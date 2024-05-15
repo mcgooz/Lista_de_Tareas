@@ -31,5 +31,5 @@ The program also utilises the following libraries:
 Con este programa, puedes agregar tareas, marcarlas como completadas y quitarlas. Tiene una visualización dinámica en el terminal que actualiza después de cada operación.  
 Creará y utilizará un archivo json para guardar la lista para que puedas salir del programa y volver a abrirlo sin perder los datos.
 
-With this program you can add tasks, mark them as complete and remove them. It has a dynamic display within the terminal that updates after each operation.  
+With this program, you can add tasks, mark them as complete and remove them. It has a dynamic display within the terminal that updates after each operation.  
 It will create and use a json file to save the list so that you can quit the program and re-open it without losing any data.
