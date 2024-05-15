@@ -1,6 +1,6 @@
 # Librerías: Avisos contiene todos los mensajes de aviso.
 # datetime para mostrar la fecha. tabulate para mostrar la lista de tareas en una tabla.
-# json para guardar y recuperar datos en un archivo json. random para mostrar varios mensajes de ánimo, despedida.
+# json para guardar y recuperar datos en un archivo json. random para mostrar varios mensajes de ánimo y despedida.
 # time para dar un momento para leer los avisos.
 
 from avisos import Avisos
@@ -20,9 +20,9 @@ class Lista_de_tareas:
 
     def __init__(self, archivo):
         self.archivo = archivo  # Nombre del archivo o directorio del json
-        self.tareas = self.check_json()  # Recuperar tareas del json, si existe.
+        self.tareas = self.check_json()  # Recuperar tareas del json.
 
-    # Abrir y leer el json si existe. Si no, devolver una lista vacía.
+    # Abrir y leer el json, si existe. Si no, devolver una lista vacía.
     def check_json(self):
         try:
             with open(self.archivo, "r") as archivo:
@@ -35,14 +35,14 @@ class Lista_de_tareas:
         # Comprobar si hay entradas en la lista
         if self.tareas:
             listado = ""  # Inicializar una lista vacía.
-            indice = 1  # Inicializar indice a 1
-            # Iterar sobre las entradas para ver estado y asignar un string correspondiente.
+            indice = 1  # Inicializar indice a 1.
+            # Iterar sobre las entradas para ver estado.
             for tarea in self.tareas:
                 if tarea["completada"]:
                     estado = "Completada"
                 else:
                     estado = "Pendiente"
-                # Construir string de tareas encontradas y agregar a la lista inicializada.
+                # Construir entrada de tarea y agregar a la lista.
                 listado += f"{indice}. {tarea['tarea']} - {estado}\n"
                 # Actualizar número de indice.
                 indice += 1
@@ -59,7 +59,7 @@ class Lista_de_tareas:
 
     # Método para agregar una tarea.
     def agregar(self, tarea):
-        # Chequear si una tarea ya existe.
+        # Verificar si una tarea ya existe.
         for tarea_existente in self.tareas:
             if tarea_existente["tarea"] == tarea:
                 return "tarea_ya_existe", tarea
@@ -67,10 +67,10 @@ class Lista_de_tareas:
         # Utilizar un diccionario para agregar una tarea a la lista y hacer seguimiento de su estado.
         self.tareas.append(
             {"tarea": tarea, "completada": False}
-        )  # Por defecto, el estado será False.
+        )  # Por defecto, el estado es False.
         # Guardar la tarea en json.
         self.guardar()
-        # Devolver mensaje de éxito
+        # Devolver mensaje de éxito.
         return "tarea_agregada", tarea
 
     # Método para marcar como completada
@@ -99,8 +99,8 @@ class Lista_de_tareas:
     def listar(self):
         tabla = ""
         if self.tareas:
-            # Especificar cabeceras de las columnas de la tabla (tabulate)
-            cabeceras = ["#", "Tarea", "Estado"]
+            # Especificar encabezados de la tabla (tabulate)
+            encabezados = ["#", "Tarea", "Estado"]
             tabla = []
             # Inicializar variable para numerar entradas
             número = 1
@@ -117,7 +117,7 @@ class Lista_de_tareas:
                 # Aumentar numero para la siguiente entrada
                 número += 1
             # Generar tabla formateada.
-            tabla = tabulate(tabla, headers=cabeceras, tablefmt="fancy_grid")
+            tabla = tabulate(tabla, headers=encabezados, tablefmt="fancy_grid")
         else:
             tabla = "ninguna_tarea", None
         return tabla
