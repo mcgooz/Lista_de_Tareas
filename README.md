@@ -1,15 +1,16 @@
-# Lista de Tareas / Todo List
+# Lista de Tareas // Todo List
 
 Lista de Tareas es un programa para listar tareas.
 Lista de Tareas is a program for listing tasks.
 
-## Librerías / Libraries
+## Librerías // Libraries
 
 Es necesario importar la lista de avisos desde avisos.py
 It's necessary to import the notifications list from avisos.py
 
 ```python
 from avisos import Avisos
+```
 
 El programa también utiliza las librerías a continuación:
 - datetime para mostrar la fecha. 
