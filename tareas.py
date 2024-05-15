@@ -1,8 +1,3 @@
-# Librerías: Avisos contiene todos los mensajes de aviso.
-# datetime para mostrar la fecha. tabulate para mostrar la lista de tareas en una tabla.
-# json para guardar y recuperar datos en un archivo json. random para mostrar varios mensajes de ánimo y despedida.
-# time para dar un momento para leer los avisos.
-
 from avisos import Avisos
 from datetime import date
 from tabulate import tabulate
@@ -99,22 +94,22 @@ class Lista_de_tareas:
     def listar(self):
         tabla = ""
         if self.tareas:
-            # Especificar encabezados de la tabla (tabulate)
+            # Especificar encabezados de la tabla (tabulate), inicializar tabla.
             encabezados = ["#", "Tarea", "Estado"]
             tabla = []
-            # Inicializar variable para numerar entradas
+            # Inicializar variable para numerar las entradas.
             número = 1
             # Iterar sobre la lista
             for tarea in self.tareas:
-                # Si completada es falso, poner pendiente con color correspondiente.
+                # Si completada es falso, poner 'pendiente' con color correspondiente.
                 if tarea["completada"] == False:
                     estado = self.AZUL + "Pendiente" + self.DEF_COLOR
-                # Si completada es verdad, poner completada con color correspondiente.
+                # Si completada es verdad, poner 'completada' con color correspondiente.
                 elif tarea["completada"] == True:
                     estado = self.VERDE + "Completada" + self.DEF_COLOR
                 # Añadir fila a la tabla
                 tabla.append([número, tarea["tarea"], estado])
-                # Aumentar numero para la siguiente entrada
+                # Aumentar número para la siguiente entrada.
                 número += 1
             # Generar tabla formateada.
             tabla = tabulate(tabla, headers=encabezados, tablefmt="fancy_grid")
@@ -136,31 +131,33 @@ class Lista_de_tareas:
             return "numero_invalido", None
 
 
-### Funciónes ###
+### Funciones ###
 
 # Codigos ANSI para resetear visualización.
 resetear_pantalla = "\033[H\033[J"
 resetear_linea = "\033[F\033[K"
 
 
-# Mantener una visualizacion limpia y dinámica.
-def visualizacion(lista_tareas, aviso=None):  # Inicializar input de aviso a None para la primera visualización de main.
+# Mantener una visualización limpia y dinámica.
+def visualizacion(lista_tareas, aviso=None):  # Inicializar input de aviso a None para la visualización inicial.
     print(resetear_pantalla)
     print(f"### LISTA DE TAREAS ###\n")
     print(f"====| {date.today()} |====\n")
+    # Si no hay entradas, imprimir aviso de ninguna tarea.
     if not lista_tareas.tareas:
         print(f"{Avisos.aviso('ninguna_tarea', None)}\n")
     else:
         print(f"{lista_tareas.listar()}\n")
     opciones()
-    # Si se pasa un aviso a la función, imprímelo además de actualizar la tabla.
+    # Si se pasa un aviso a la función, imprimirlo.
     if aviso is not None:
         print(f"\n{aviso}")
+        # Una pausa corta para leer el aviso.
         time.sleep(1.5)
 
 
 def opciones():
-    # Crear diccionario de opciones
+    # Diccionario de opciones.
     opciones = {
         "1": "Agregar una tarea",
         "2": "Marcar una tarea como completada",
@@ -174,7 +171,7 @@ def opciones():
 
 
 def main():
-    # Llamar clase lista de tareas con nombre de archivo json.
+    # Llamar clase lista de tareas, pasando argumento del archivo json.
     lista_tareas = Lista_de_tareas("datos.json")
 
     # Bucle while permite que el programa sigue abierto hasta que se selccione la opción de salir.
