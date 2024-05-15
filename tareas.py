@@ -296,7 +296,7 @@ def opcion_quitar(lista_tareas):
                 break
 
 
-# Mensajes de despedida aleatorios.
+# Mensajes de despedida randomizados.
 def opcion_adios():
     mensajes = [
         "¡Adiós! 👋",
