@@ -25,3 +25,9 @@ The program also utilises the following libraries:
 - json to save and load the data in a json file.
 - random to show various messages of encouragement, and farewells.
 - time to allow for a moment to read the notification messages.
+
+## Uso // Usage
+
+Con este programa, puedes agregar tareas, marcarlas como completadas y quitarlas. Tiene una visualización dinámica en el terminal que actualiza después de cada operación.  
+
+With this program you can add tasks, mark them as complete and remove them. It has a dynamic display within the terminal that updates after each operation.
