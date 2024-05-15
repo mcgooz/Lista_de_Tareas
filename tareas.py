@@ -1,4 +1,5 @@
-# Librerías: datetime para mostrar la fecha. tabulate para mostrar la lista de tareas en una tabla.
+# Librerías: Avisos contiene todos los mensajes de aviso.
+# datetime para mostrar la fecha. tabulate para mostrar la lista de tareas en una tabla.
 # json para guardar y recuperar datos en un archivo json. random para mostrar varios mensajes de ánimo, despedida.
 # time para dar un momento para leer los avisos.
 
@@ -275,7 +276,7 @@ def opcion_quitar(lista_tareas):
         aviso = f"{resetear_linea}{Avisos.aviso('ninguna_tarea', None)}"
         visualizacion(lista_tareas, aviso)
         return
-
+    # Bucle while que permite que se intente de nuevo si el input no es valido.
     while True:
         print(
             f"{resetear_linea}Introduce el número de la tarea que quieres quitar. Para volver atras, usa '0': ",
