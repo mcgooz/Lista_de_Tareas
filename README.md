@@ -1,7 +1,7 @@
 # Lista de Tareas // Todo List
 
-Lista de Tareas es un programa para listar tareas.  
-Lista de Tareas is a program for listing tasks.  
+Lista de Tareas es un programa para apuntar tareas.  
+Lista de Tareas is a program for noting down tasks.  
 
 ## Librerías // Libraries
 
