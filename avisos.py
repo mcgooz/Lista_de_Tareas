@@ -1,6 +1,5 @@
 # avisos.py
 
-
 class Avisos:
     @staticmethod
     def aviso(clave, *args):
