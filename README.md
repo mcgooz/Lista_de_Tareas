@@ -5,20 +5,26 @@ Lista de Tareas is a program for noting down and managing tasks.
 
 ## Librerías // Libraries
 
-El programa principal utiliza dos clases personalizadas: tareaclass.py y avisos.py.  
-The main program uses two custom classes: tareaclass.py and avisos.py.  
+El programa principal, lista_de_tareas, utiliza los siguientes tres archivos:  
+- **tareaclass.py**: una class que contiene la lista de tareas y sus métodos correspondientes - Agregar, completar, quitar, mostrar.  
+- **avisos.py** y **resultados.py**: definen los mensajes de aviso para informar al usuario de cualquier (casi) error.  
+
+The main program, lista_de_tareas, makes use of the following three files:  
+- **tareaclass.py** A class that contains the list of tasks and its corresponding methods - Add, complete, remove, show.  
+- **avisos.py** and **resultados.py**: These define the notifications that will inform the user of (almost) any error.  
 
 ```python
 from avisos import Avisos
+from resultados import Resultados
 from tareaclass import ListaTareas
 ```
 
-El programa principal también utiliza las librerías a continuación:
+También se utiliza las librerías a continuación:
 - *datetime* para mostrar la fecha.
 - *random* para mostrar varios mensajes de ánimo y despedida.
 - *time* para dar un momento para leer los avisos.
 
-The main program also utilises the following libraries:
+The following libraries are also utilised:
 - *datetime* to show the date.
 - *random* to show various messages of encouragement, and farewells.
 - *time* to allow for a moment to read the notification messages.
