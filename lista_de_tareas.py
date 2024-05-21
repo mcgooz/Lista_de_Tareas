@@ -23,6 +23,7 @@ def visualizacion(lista_tareas, aviso=None):  # Inicializar input de aviso a Non
     else:
         print(f"{lista_tareas.tabular()}\n")
     opciones()
+    # Si se pasa un aviso a la función, imprimirlo.
     if aviso is not None:
         print(f"\n{aviso}")
         # Una pausa corta para leer el aviso.
@@ -46,7 +47,7 @@ def opciones():
 def main():
     intro = ((
         "=======================================================================================\n"
-        "Esto es un programa para apuntar y gestionar tareas.\n"
+        "Este programa permite apuntar y gestionar tareas a través del terminal.\n"
         "<<< Se recomienda que se maximize el terminal para asegurar una experiencia optimal >>>\n"
         "Por favor, pulsa Enter para continuar.\n"
         "=======================================================================================\n"
