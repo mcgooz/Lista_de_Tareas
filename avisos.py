@@ -1,5 +1,6 @@
 # avisos.py
 
+# Dict de avisos
 class Avisos:
     @staticmethod
     def aviso(clave, *args):

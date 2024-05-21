@@ -8,18 +8,22 @@ class ListaTareas:
         self.lista = []
         self.cargar()
 
+    # Recuperar tareas guardadas.
     def cargar(self):
         try:
             with open("datos.json", "r") as archivo:
                 datos = json.load(archivo)
                 self.lista = datos
+        # Si el json aun no se ha creado (o no se puede abrir), inicializar una lista nueva.
         except (FileNotFoundError, json.JSONDecodeError):
             self.lista = []
 
+    # Guardar cambios al json.
     def guardar(self):
         with open("datos.json", "w") as archivo:
             json.dump(self.lista, archivo, indent=4)
     
+    # Agregar una nueva tarea a la lista.
     def agregar(self, tarea):
         for entrada in self.lista:
             if entrada["tarea"] == tarea:
@@ -29,6 +33,7 @@ class ListaTareas:
         self.guardar()
         return "tarea_agregada", tarea
 
+    # Marcar una tarea como completada.
     def completar(self, i):
         try:
             entrada = int(i) - 1
@@ -43,7 +48,8 @@ class ListaTareas:
             return "tarea_no_encontrada", None
         except ValueError:
             return "numero_invalido", None
-        
+
+    # Quitar una tarea de la lista.    
     def quitar(self, i):
         try:
             entrada = int(i) - 1
@@ -56,7 +62,7 @@ class ListaTareas:
         except ValueError:
             return "numero_invalido", None
 
-
+    # Seguir el estado de una tarea. 
     def estado(self, tarea):
         # Definir colores con códigos de ANSI.
         verde = "\033[92m"
@@ -67,11 +73,10 @@ class ListaTareas:
         elif tarea["completada"]:
             return (verde + "Completada" + negro)
 
-
+    # Crear y formatear la lista.
     def tabular(self):
         tabla = []
         encabezados = ["#", "Tarea", "Estado"]
-
         for indice, tarea in enumerate(self.lista, start=1):
             estado = self.estado(tarea)
             tabla.append([indice, tarea["tarea"], estado])
