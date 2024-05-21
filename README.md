@@ -5,8 +5,8 @@ Lista de Tareas is a program for noting down and managing tasks.
 
 ## Librerías // Libraries
 
-El programa principal utiliza dos clases personalizadas, las cuales se tienen que importar desde tareaclass.py y avisos.py.  
-The main program uses two custom classes, which have to be imported from tareaclass.py and avisos.py.  
+El programa principal utiliza dos clases personalizadas: tareaclass.py y avisos.py.  
+The main program uses two custom classes: tareaclass.py and avisos.py.  
 
 ```python
 from avisos import Avisos
