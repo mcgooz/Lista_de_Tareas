@@ -1,35 +1,41 @@
 # Lista de Tareas // Todo List
 
-Lista de Tareas es un programa para apuntar tareas.  
-Lista de Tareas is a program for noting down tasks.  
+Lista de Tareas es un programa para apuntar y gestionar tareas.  
+Lista de Tareas is a program for noting down and managing tasks.  
 
 ## Librerías // Libraries
 
-Es necesario importar la lista de avisos desde avisos.py.  
-It's necessary to import the notifications list from avisos.py.  
+El programa principal utiliza dos clases personalizadas, las cuales se tienen que importar desde tareaclass.py y avisos.py.
+The main program uses two custom classes, which have to be imported from tareaclass.py and avisos.py.
 
 ```python
 from avisos import Avisos
+from tareaclass import ListaTareas
 ```
 
-El programa también utiliza las librerías a continuación:
-- *datetime* para mostrar la fecha. 
-- *tabulate* para mostrar la lista de tareas en una tabla.
-- *json* para guardar y recuperar datos en un archivo json. 
+El programa principal también utiliza las librerías a continuación:
+- *datetime* para mostrar la fecha.
 - *random* para mostrar varios mensajes de ánimo y despedida.
 - *time* para dar un momento para leer los avisos.
 
-The program also utilises the following libraries:
-- *datetime* to show the date. 
-- *tabulate* to show the list as a formatted table.
-- *json* to save and load the data in a json file.
+The main program also utilises the following libraries:
+- *datetime* to show the date.
 - *random* to show various messages of encouragement, and farewells.
 - *time* to allow for a moment to read the notification messages.
 
+El archivo tareaclass.py utiliza:
+- *tabulate* para mostrar la lista de tareas en una tabla.
+- *json* para guardar y recuperar datos en un archivo json.
+
+The file tareaclass.py makes use of:
+- *tabulate* to show the list as a formatted table.
+- *json* to save and load the data in a json file.
+
+
 ## Uso // Usage
 
-Con este programa, puedes agregar tareas, marcarlas como completadas y quitarlas. Tiene una visualización dinámica en el terminal que actualiza después de cada operación.  
-Creará y utilizará un archivo json para guardar la lista para que puedas salir del programa y volver a abrirlo sin perder los datos.
+Con este programa, puedes agregar tareas, marcarlas como completadas y quitarlas. Tiene una visualización dinámica que actualiza después de cada operación.  
+El programa utiliza JSON para persistencia de datos, que permite guardar y recuperar tareas de un archivo. Esto asegura que la lista de tareas se mantiene entre sesiones.
 
 With this program, you can add tasks, mark them as complete and remove them. It has a dynamic display within the terminal that updates after each operation.  
-It will create and use a json file to save the list so that you can quit the program and re-open it without losing any data.
+The program uses JSON for data persistence, which allows it to save and load tasks from a file. This ensures that the task list is preserved between sessions.

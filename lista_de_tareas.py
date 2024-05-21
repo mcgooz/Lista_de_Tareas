@@ -46,7 +46,7 @@ def opciones():
 def main():
     intro = ((
         "=======================================================================================\n"
-        "Este programa permite apuntar y gestionar tareas a través del terminal.\n"
+        "Esto es un programa para apuntar y gestionar tareas.\n"
         "<<< Se recomienda que se maximize el terminal para asegurar una experiencia optimal >>>\n"
         "Por favor, pulsa Enter para continuar.\n"
         "=======================================================================================\n"
