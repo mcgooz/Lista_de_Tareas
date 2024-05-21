@@ -1,3 +1,5 @@
+from avisos import Avisos
+from resultados import Resultados
 from tabulate import tabulate
 import json
 
@@ -27,11 +29,11 @@ class ListaTareas:
     def agregar(self, tarea):
         for entrada in self.lista:
             if entrada["tarea"] == tarea:
-                return "tarea_ya_existe", tarea
+                return Resultados.TAREA_YA_EXISTE, tarea["tarea"]
 
         self.lista.append({"tarea": tarea, "completada": False})
         self.guardar()
-        return "tarea_agregada", tarea
+        return Resultados.TAREA_AGREGADA, tarea
 
     # Marcar una tarea como completada.
     def completar(self, i):
@@ -39,15 +41,15 @@ class ListaTareas:
             entrada = int(i) - 1
             tarea = self.lista[entrada]
             if tarea["completada"]:
-                    return "tarea_ya_completada", tarea["tarea"]
+                    return Resultados.TAREA_YA_COMPLETADA, tarea["tarea"]
             else:
                 tarea["completada"] = True
                 self.guardar()
-                return "tarea_completada", tarea["tarea"]
+                return Resultados.TAREA_COMPLETADA, tarea["tarea"]
         except IndexError:
-            return "tarea_no_encontrada", None
+            return Resultados.TAREA_NO_ENCONTRADA, None
         except ValueError:
-            return "numero_invalido", None
+            return Resultados.NUMERO_INVALIDO, None
 
     # Quitar una tarea de la lista.    
     def quitar(self, i):
@@ -56,11 +58,11 @@ class ListaTareas:
             tarea = self.lista[entrada]
             self.lista.remove(tarea)
             self.guardar()
-            return "tarea_quitada", tarea["tarea"]
+            return Resultados.TAREA_QUITADA, tarea["tarea"]
         except IndexError:
-            return "tarea_no_encontrada", None
+            return Resultados.TAREA_NO_ENCONTRADA, None
         except ValueError:
-            return "numero_invalido", None
+            return Resultados.NUMERO_INVALIDO, None
 
     # Seguir el estado de una tarea. 
     def estado(self, tarea):

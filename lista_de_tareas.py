@@ -1,4 +1,5 @@
 from avisos import Avisos
+from resultados import Resultados
 from tareaclass import ListaTareas
 from datetime import date
 import random
@@ -13,14 +14,14 @@ resetear_linea = "\033[F\033[K"
 lista_tareas = ListaTareas()
 
 # Mantener una visualización limpia y dinámica.
-def visualizacion(lista_tareas, aviso=None):  # Inicializar input de aviso a None para la visualización inicial.
+def visualizacion(lista_tareas, aviso = None):
     print(resetear_pantalla)
     print(f"### LISTA DE TAREAS ###\n")
     print(f"====| {date.today()} |====\n")
 
     # Si no hay entradas, imprimir aviso de ninguna tarea.
     if not lista_tareas.lista:
-        print(f"{Avisos.aviso('ninguna_tarea', None)}\n")
+        print(f"{Avisos.aviso(Resultados.NINGUNA_TAREA, None)}\n")
     else:
         print(f"{lista_tareas.tabular()}\n")
     opciones()
@@ -58,11 +59,11 @@ def main():
     centrar = max(len(line) for line in intro.split('\n'))
     for line in intro.split('\n'):
         print(line.center(centrar))
-    input("Por favor, pulsa Enter para continuar...\n")
+    input("Pulsa Enter para continuar...\n")
 
     # Bucle while permite que el programa sigue abierto hasta que se selccione la opción de salir.
     while True:
-        visualizacion(lista_tareas)
+        visualizacion(lista_tareas, aviso = None)
         print(f"Por favor, elige una opcion (1-4): ", end="")
         seleccion = input()
 
@@ -76,7 +77,7 @@ def main():
             opcion_adios()
             break
         else:
-            aviso = f"{resetear_linea}{Avisos.aviso('opcion_invalida', None)}"
+            aviso = f"{resetear_linea}{Avisos.aviso(Resultados.OPCION_INVALIDA, None)}"
             visualizacion(lista_tareas, aviso)
 
 
@@ -91,12 +92,12 @@ def opcion_agregar(lista_tareas):
             break
         # Si la entrada está vacía, se avisa y el usuario puede volver a intentar.
         elif nombre_tarea == "":
-            aviso = f"{resetear_linea}{Avisos.aviso('ninguna_entrada', None)}"
+            aviso = f"{resetear_linea}{Avisos.aviso(Resultados.NINGUNA_ENTRADA, None)}"
             visualizacion(lista_tareas, aviso)
         else:
             tarea_formatada = nombre_tarea.strip() # Quitar whitespace de la entrada.
-            agregada = lista_tareas.agregar(tarea_formatada)
-            aviso = f"{resetear_linea}{Avisos.aviso(*agregada)}"
+            lista_tareas.agregar(tarea_formatada)
+            aviso = f"{resetear_linea}{Avisos.aviso(Resultados.TAREA_AGREGADA, tarea_formatada)}"
             visualizacion(lista_tareas, aviso)
             return
 
@@ -112,7 +113,7 @@ def opcion_completar(lista_tareas):
     ]
     # Si no hay tareas en la lista, avisar y volver.
     if not lista_tareas.lista:
-        aviso = f"{resetear_linea}{Avisos.aviso('ninguna_tarea', None)}"
+        aviso = f"{resetear_linea}{Avisos.aviso(Resultados.NINGUNA_TAREA, None)}"
         visualizacion(lista_tareas, aviso)
         return
 
@@ -127,21 +128,21 @@ def opcion_completar(lista_tareas):
         else:
             resultado, tarea = lista_tareas.completar(completada)
             # Si el resultado es no_encontrada, avisar y intentar de nuevo.
-            if resultado == "tarea_no_encontrada":
-                aviso = f"{resetear_linea}{Avisos.aviso(resultado, tarea)}"
+            if resultado == Resultados.TAREA_NO_ENCONTRADA:
+                aviso = f"{resetear_linea}{Avisos.aviso(Resultados.TAREA_NO_ENCONTRADA, None)}"
                 visualizacion(lista_tareas, aviso)
             # Si el resultado es numero_invalido, avisar y intentar de nuevo.
-            elif resultado == "numero_invalido":
-                aviso = f"{resetear_linea}{Avisos.aviso(resultado, tarea)}"
+            elif resultado == Resultados.NUMERO_INVALIDO:
+                aviso = f"{resetear_linea}{Avisos.aviso(Resultados.NUMERO_INVALIDO, None)}"
                 visualizacion(lista_tareas, aviso)
             # Si la tarea ya ha sido marcada como completada, avisar y volver a la pantalla principal.
-            elif resultado == "tarea_ya_completada":
-                aviso = f"{resetear_linea}{Avisos.aviso(resultado, tarea)}"
+            elif resultado == Resultados.TAREA_YA_COMPLETADA:
+                aviso = f"{resetear_linea}{Avisos.aviso(Resultados.TAREA_YA_COMPLETADA, tarea)}"
                 visualizacion(lista_tareas, aviso)
                 break
             else:
                 # Utilizar random choice para añadir un mensaje de ánimo al aviso :)
-                aviso = f"{resetear_linea}{Avisos.aviso(resultado, tarea)} {random.choice(animos)}"
+                aviso = f"{resetear_linea}{Avisos.aviso(Resultados.TAREA_COMPLETADA, tarea)} {random.choice(animos)}"
                 visualizacion(lista_tareas, aviso)
                 break
 
@@ -149,7 +150,7 @@ def opcion_completar(lista_tareas):
 def opcion_quitar(lista_tareas):
     # Si no hay tareas en la lista, avisar y volver atras.
     if not lista_tareas.lista:
-        aviso = f"{resetear_linea}{Avisos.aviso('ninguna_tarea', None)}"
+        aviso = f"{resetear_linea}{Avisos.aviso(Resultados.NINGUNA_TAREA, None)}"
         visualizacion(lista_tareas, aviso)
         return
     # Bucle while que permite que se intente de nuevo si el input no es valido.
@@ -164,14 +165,14 @@ def opcion_quitar(lista_tareas):
         else:
             # Misma funcionalidad de función completar.
             resultado, tarea = lista_tareas.quitar(quitar)
-            if resultado == "tarea_no_encontrada":
-                aviso = f"{resetear_linea}{Avisos.aviso(resultado, tarea)}"
+            if resultado == Resultados.TAREA_NO_ENCONTRADA:
+                aviso = f"{resetear_linea}{Avisos.aviso(Resultados.TAREA_NO_ENCONTRADA, None)}"
                 visualizacion(lista_tareas, aviso)
-            elif resultado == "numero_invalido":
-                aviso = f"{resetear_linea}{Avisos.aviso(resultado, tarea)}"
+            elif resultado == Resultados.NUMERO_INVALIDO:
+                aviso = f"{resetear_linea}{Avisos.aviso(Resultados.NUMERO_INVALIDO, None)}"
                 visualizacion(lista_tareas, aviso)
             else:
-                aviso = f"{resetear_linea}{Avisos.aviso(resultado, tarea)}"
+                aviso = f"{resetear_linea}{Avisos.aviso(Resultados.TAREA_QUITADA, tarea)}"
                 visualizacion(lista_tareas, aviso)
                 break
 
