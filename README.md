@@ -1,8 +1,8 @@
 see below for English  
 
-# Lista de Tareas  
+## Lista de Tareas  
 
-Lista de Tareas es un programa para apuntar y gestionar tareas.  
+Un programa para apuntar y gestionar tareas.  
 
 ## Librerías  
 
@@ -32,9 +32,9 @@ Con este programa, puedes agregar tareas, marcarlas como completadas y quitarlas
 El programa utiliza JSON para persistencia de datos, que permite guardar y recuperar tareas de un archivo. Esto asegura que la lista de tareas se mantiene entre sesiones.
 
 # English
-# Lista de Tareas (Todo List)  
+## Lista de Tareas (Todo List)  
 
-Lista de Tareas is a program for creating and managing tasks.  
+A program for creating and managing tasks.  
 
 ## Libraries  
 
