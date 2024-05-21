@@ -1,135 +1,8 @@
 from avisos import Avisos
+from tareaclass import ListaTareas
 from datetime import date
-from tabulate import tabulate
-import json
 import random
 import time
-
-
-# Definir clase de tareas
-class Lista_de_tareas:
-    # Definir colores con códigos de ANSI.
-    VERDE = "\033[92m"
-    AZUL = "\033[94m"
-    DEF_COLOR = "\033[0m"  # Resetear color
-
-    def __init__(self, archivo):
-        self.archivo = archivo  # Nombre del archivo o directorio del json
-        self.tareas = self.check_json()  # Recuperar tareas del json.
-
-    # Abrir y leer el json, si existe. Si no, devolver una lista vacía.
-    def check_json(self):
-        try:
-            with open(self.archivo, "r") as archivo:
-                return json.load(archivo)
-        except FileNotFoundError:
-            return []
-
-    # Representar objetos como strings
-    def __str__(self):
-        # Comprobar si hay entradas en la lista
-        if self.tareas:
-            listado = ""  # Inicializar una lista vacía.
-            indice = 1  # Inicializar indice a 1.
-            # Iterar sobre las entradas para ver estado.
-            for tarea in self.tareas:
-                if tarea["completada"]:
-                    estado = "Completada"
-                else:
-                    estado = "Pendiente"
-                # Construir entrada de tarea y agregar a la lista.
-                listado += f"{indice}. {tarea['tarea']} - {estado}\n"
-                # Actualizar número de indice.
-                indice += 1
-            # Devolver lista completa
-            return listado
-        # Si no hay entradas, devolver un mensaje de aviso.
-        else:
-            return "ninguna_tarea", None
-
-    # Abrir el json y guardar la lista de tareas.
-    def guardar(self):
-        with open(self.archivo, "w") as archivo:
-            json.dump(self.tareas, archivo, indent=4)
-
-    # Método para agregar una tarea.
-    def agregar(self, tarea):
-        # Verificar si una tarea ya existe.
-        for tarea_existente in self.tareas:
-            if tarea_existente["tarea"] == tarea:
-                return "tarea_ya_existe", tarea
-
-        # Utilizar un diccionario para agregar una tarea a la lista y hacer seguimiento de su estado.
-        self.tareas.append(
-            {"tarea": tarea, "completada": False}
-        )  # Por defecto, el estado es False.
-        # Guardar la tarea en json.
-        self.guardar()
-        # Devolver mensaje de éxito.
-        return "tarea_agregada", tarea
-
-    # Método para marcar como completada
-    def completar(self, indice_tarea):
-        # Usar try/except para pillar error de input
-        try:
-            # Buscar entrada en la lista y cambiar estado a True.
-            indice_tarea = int(indice_tarea) - 1  # Menos uno por el indice cero.
-            tarea = self.tareas[indice_tarea]
-            if tarea["completada"]:
-                return "tarea_ya_completada", tarea["tarea"]
-            else:
-                tarea["completada"] = True
-                # Actualizar json
-                self.guardar()
-                # Devolver mensaje de éxito.
-                return "tarea_completada", tarea["tarea"]
-
-        # Si lo introducido no es válido, devolver mensaje de error.
-        except IndexError:
-            return "tarea_no_encontrada", None
-        except ValueError:
-            return "numero_invalido", None
-
-    # Método para mostrar el listado
-    def listar(self):
-        tabla = ""
-        if self.tareas:
-            # Especificar encabezados de la tabla (tabulate), inicializar tabla.
-            encabezados = ["#", "Tarea", "Estado"]
-            tabla = []
-            # Inicializar variable para numerar las entradas.
-            número = 1
-            # Iterar sobre la lista
-            for tarea in self.tareas:
-                # Si completada es falso, poner 'pendiente' con color correspondiente.
-                if tarea["completada"] == False:
-                    estado = self.AZUL + "Pendiente" + self.DEF_COLOR
-                # Si completada es verdad, poner 'completada' con color correspondiente.
-                elif tarea["completada"] == True:
-                    estado = self.VERDE + "Completada" + self.DEF_COLOR
-                # Añadir fila a la tabla
-                tabla.append([número, tarea["tarea"], estado])
-                # Aumentar número para la siguiente entrada.
-                número += 1
-            # Generar tabla formateada.
-            tabla = tabulate(tabla, headers=encabezados, tablefmt="fancy_grid")
-        else:
-            tabla = "ninguna_tarea", None
-        return tabla
-
-    # Método para quitar una tarea
-    def quitar(self, indice_tarea):
-        try:
-            indice_tarea = int(indice_tarea) - 1
-            tarea = self.tareas[indice_tarea]
-            self.tareas.remove(tarea)
-            self.guardar()
-            return "tarea_quitada", tarea["tarea"]
-        except IndexError:
-            return "tarea_no_encontrada", None
-        except ValueError:
-            return "numero_invalido", None
-
 
 ### Funciones ###
 
@@ -137,6 +10,7 @@ class Lista_de_tareas:
 resetear_pantalla = "\033[H\033[J"
 resetear_linea = "\033[F\033[K"
 
+lista_tareas = ListaTareas()
 
 # Mantener una visualización limpia y dinámica.
 def visualizacion(lista_tareas, aviso=None):  # Inicializar input de aviso a None para la visualización inicial.
@@ -144,12 +18,11 @@ def visualizacion(lista_tareas, aviso=None):  # Inicializar input de aviso a Non
     print(f"### LISTA DE TAREAS ###\n")
     print(f"====| {date.today()} |====\n")
     # Si no hay entradas, imprimir aviso de ninguna tarea.
-    if not lista_tareas.tareas:
+    if not lista_tareas.lista:
         print(f"{Avisos.aviso('ninguna_tarea', None)}\n")
     else:
-        print(f"{lista_tareas.listar()}\n")
+        print(f"{lista_tareas.tabular()}\n")
     opciones()
-    # Si se pasa un aviso a la función, imprimirlo.
     if aviso is not None:
         print(f"\n{aviso}")
         # Una pausa corta para leer el aviso.
@@ -171,9 +44,17 @@ def opciones():
 
 
 def main():
-    # Llamar clase lista de tareas, pasando argumento del archivo json.
-    lista_tareas = Lista_de_tareas("datos.json")
-
+    intro = ((
+        "=======================================================================================\n"
+        "Este programa permite apuntar y gestionar tareas a través del terminal.\n"
+        "<<< Se recomienda que se maximize el terminal para asegurar una experiencia optimal >>>\n"
+        "Por favor, pulsa Enter para continuar.\n"
+        "=======================================================================================\n"
+))
+    long = max(len(line) for line in intro.split('\n'))
+    for line in intro.split('\n'):
+        print(line.center(long))
+    input()
     # Bucle while permite que el programa sigue abierto hasta que se selccione la opción de salir.
     while True:
         visualizacion(lista_tareas)
@@ -196,13 +77,9 @@ def main():
 
 ### Opciones ###
 
-
 def opcion_agregar(lista_tareas):
     while True:
-        print(
-            f"{resetear_linea}Introduce una tarea. Para volver atras, usa '0': ",
-            end="",
-        )
+        print(f"{resetear_linea}Introduce una tarea. Para volver atras, usa '0': ", end="")
         nombre_tarea = input()
         # 0 termina el bucle para volver atras
         if nombre_tarea == "0":
@@ -213,8 +90,8 @@ def opcion_agregar(lista_tareas):
             visualizacion(lista_tareas, aviso)
         # Quitar cualquier whitespace de la entrada, guardarla en la lista. Mostrar mensaje de éxito y volver.
         else:
-            nombre_tarea_format = nombre_tarea.strip()
-            agregada = lista_tareas.agregar(nombre_tarea_format)
+            tarea_formatada = nombre_tarea.strip()
+            agregada = lista_tareas.agregar(tarea_formatada)
             aviso = f"{resetear_linea}{Avisos.aviso(*agregada)}"
             visualizacion(lista_tareas, aviso)
             return
@@ -230,7 +107,7 @@ def opcion_completar(lista_tareas):
         "¡Súper!",
     ]
     # Si no hay tareas en la lista, mostrar aviso y volver.
-    if not lista_tareas.tareas:
+    if not lista_tareas.lista:
         aviso = f"{resetear_linea}{Avisos.aviso('ninguna_tarea', None)}"
         visualizacion(lista_tareas, aviso)
         return
@@ -268,7 +145,7 @@ def opcion_completar(lista_tareas):
 
 def opcion_quitar(lista_tareas):
     # Si no hay tareas en la lista, avisar y volver atras.
-    if not lista_tareas.tareas:
+    if not lista_tareas.lista:
         aviso = f"{resetear_linea}{Avisos.aviso('ninguna_tarea', None)}"
         visualizacion(lista_tareas, aviso)
         return
