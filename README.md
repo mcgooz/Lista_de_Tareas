@@ -6,11 +6,11 @@ Lista de Tareas is a program for noting down and managing tasks.
 ## Librerías // Libraries
 
 El programa principal, lista_de_tareas, utiliza los siguientes tres archivos:  
-- **tareaclass.py**: una class que contiene la lista de tareas y sus métodos correspondientes - Agregar, completar, quitar, mostrar.  
+- **tareaclass.py**: una class que contiene la lista de tareas y sus métodos correspondientes.  
 - **avisos.py** y **resultados.py**: definen los mensajes de aviso para informar al usuario de cualquier (casi) error.  
 
 The main program, lista_de_tareas, makes use of the following three files:  
-- **tareaclass.py** A class that contains the list of tasks and its corresponding methods - Add, complete, remove, show.  
+- **tareaclass.py** A class that contains the list of tasks and its corresponding methods.  
 - **avisos.py** and **resultados.py**: These define the notifications that will inform the user of (almost) any error.  
 
 ```python
