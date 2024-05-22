@@ -29,7 +29,7 @@ def visualizacion(lista_tareas, aviso = None):
     # Imprimir aviso correspondiente.
     if aviso is not None:
         print(f"\n{aviso}")
-        time.sleep(1.6) # Una pausa corta para leer el aviso.
+        time.sleep(1.6) # Una pausa corta para leer el aviso. 
 
 def opciones():
     opciones = {
@@ -63,7 +63,7 @@ def main():
 
     # Bucle while permite que el programa sigue abierto hasta que se selccione la opción de salir.
     while True:
-        visualizacion(lista_tareas, aviso = None)
+        visualizacion(lista_tareas, aviso=None)
         print(f"Por favor, elige una opcion (1-4): ", end="")
         seleccion = input()
 
