@@ -10,8 +10,9 @@ import time
 resetear_pantalla = "\033[H\033[J"
 resetear_linea = "\033[F\033[K"
 
-# Instanciar la clase.
+# Instanciar la clase y cargar lista guardada (si existe).
 lista_tareas = ListaTareas()
+lista_tareas.cargar()
 
 # Mantener una visualización limpia y dinámica.
 def visualizacion(lista_tareas, aviso = None):
