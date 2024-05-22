@@ -29,7 +29,7 @@ def visualizacion(lista_tareas, aviso = None):
     # Imprimir aviso correspondiente.
     if aviso is not None:
         print(f"\n{aviso}")
-        time.sleep(1.5) # Una pausa corta para leer el aviso.
+        time.sleep(1.6) # Una pausa corta para leer el aviso.
 
 def opciones():
     opciones = {
