@@ -50,7 +50,7 @@ def main():
         "\n"
         "=============================================< INFORMACIÓN >=============================================\n"
         "------\n"
-        "<<< Se recomienda maximizar el terminal para asegurar una experiencia optima >>>\n"
+        "<<< Se recomienda maximizar el terminal para asegurar una experiencia óptima >>>\n"
         "------\n"
         "<<<<< Por favor, ten en cuenta que el siguiente paso limpiará cualquier texto visible del terminal >>>>> \n"
         "------\n"
