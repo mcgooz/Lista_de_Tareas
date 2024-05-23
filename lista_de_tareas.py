@@ -14,8 +14,9 @@ resetear_linea = "\033[F\033[K"
 lista_tareas = ListaTareas()
 lista_tareas.cargar()
 
+
 # Mantener una visualización limpia y dinámica.
-def visualizacion(lista_tareas, aviso = None):
+def visualizacion(lista_tareas, aviso=None):
     print(resetear_pantalla)
     print(f"### LISTA DE TAREAS ###\n")
     print(f"====| {date.today()} |====\n")
@@ -30,7 +31,8 @@ def visualizacion(lista_tareas, aviso = None):
     # Imprimir aviso correspondiente.
     if aviso is not None:
         print(f"\n{aviso}")
-        time.sleep(1.6) # Una pausa corta para leer el aviso. 
+        time.sleep(1.6)  # Una pausa corta para leer el aviso.
+
 
 def opciones():
     opciones = {
@@ -46,7 +48,7 @@ def opciones():
 
 
 def main():
-    intro = ((
+    intro = (
         "\n"
         "=============================================< INFORMACIÓN >=============================================\n"
         "------\n"
@@ -55,10 +57,10 @@ def main():
         "<<<<< Por favor, ten en cuenta que el siguiente paso limpiará cualquier texto visible del terminal >>>>> \n"
         "------\n"
         "=========================================================================================================\n"
-))
+    )
     # Calcular longitud de la linea más larga para justificar texto al centro.
-    centrar = max(len(line) for line in intro.split('\n'))
-    for line in intro.split('\n'):
+    centrar = max(len(line) for line in intro.split("\n"))
+    for line in intro.split("\n"):
         print(line.center(centrar))
     input("Pulsa Enter para continuar...\n")
 
@@ -84,9 +86,12 @@ def main():
 
 ### Opciones ###
 
+
 def opcion_agregar(lista_tareas):
     while True:
-        print(f"{resetear_linea}Introduce una tarea. Para volver atras, usa '0': ", end="")
+        print(
+            f"{resetear_linea}Introduce una tarea. Para volver atras, usa '0': ", end=""
+        )
         nombre_tarea = input()
         nombre = nombre_tarea.strip()
         # 0 rompe del bucle para volver atras.
@@ -97,7 +102,9 @@ def opcion_agregar(lista_tareas):
             aviso = f"{resetear_linea}{Avisos.aviso(Resultados.NINGUNA_ENTRADA, None)}"
             visualizacion(lista_tareas, aviso)
         elif nombre == lista_tareas.check(nombre):
-            aviso = f"{resetear_linea}{Avisos.aviso(Resultados.TAREA_YA_EXISTE, nombre)}"
+            aviso = (
+                f"{resetear_linea}{Avisos.aviso(Resultados.TAREA_YA_EXISTE, nombre)}"
+            )
             visualizacion(lista_tareas, aviso)
         else:
             lista_tareas.agregar(nombre)
@@ -137,7 +144,9 @@ def opcion_completar(lista_tareas):
                 visualizacion(lista_tareas, aviso)
             # Si el resultado es numero_invalido, avisar y intentar de nuevo.
             elif resultado == Resultados.NUMERO_INVALIDO:
-                aviso = f"{resetear_linea}{Avisos.aviso(Resultados.NUMERO_INVALIDO, None)}"
+                aviso = (
+                    f"{resetear_linea}{Avisos.aviso(Resultados.NUMERO_INVALIDO, None)}"
+                )
                 visualizacion(lista_tareas, aviso)
             # Si la tarea ya ha sido marcada como completada, avisar y volver a la pantalla principal.
             elif resultado == Resultados.TAREA_YA_COMPLETADA:
@@ -173,10 +182,14 @@ def opcion_quitar(lista_tareas):
                 aviso = f"{resetear_linea}{Avisos.aviso(Resultados.TAREA_NO_ENCONTRADA, None)}"
                 visualizacion(lista_tareas, aviso)
             elif resultado == Resultados.NUMERO_INVALIDO:
-                aviso = f"{resetear_linea}{Avisos.aviso(Resultados.NUMERO_INVALIDO, None)}"
+                aviso = (
+                    f"{resetear_linea}{Avisos.aviso(Resultados.NUMERO_INVALIDO, None)}"
+                )
                 visualizacion(lista_tareas, aviso)
             else:
-                aviso = f"{resetear_linea}{Avisos.aviso(Resultados.TAREA_QUITADA, tarea)}"
+                aviso = (
+                    f"{resetear_linea}{Avisos.aviso(Resultados.TAREA_QUITADA, tarea)}"
+                )
                 visualizacion(lista_tareas, aviso)
                 break
 

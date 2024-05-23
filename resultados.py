@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class Resultados(Enum):
     TAREA_AGREGADA = 1
     TAREA_YA_EXISTE = 2
