@@ -28,12 +28,11 @@ class ListaTareas:
         with open("datos.json", "w") as archivo:
             json.dump(self.lista, archivo, indent=4)
     
-    def agregar(self, tarea):
+    def agregar(self, entrada):
         """Agregar una nueva tarea a la lista.
         
-        Si una tarea ya existe en la lista, devolver un mensaje de aviso para no duplicarla.
         Por defecto, una tarea se agregará con el estado 'completada' como False.
-        Luego, guardar la tarea en el json.
+        Luego, guardar la entrada en el json.
 
         Args:
             tarea (str): La tarea a agregar.
@@ -42,12 +41,17 @@ class ListaTareas:
             tuple: Resultado de la operación y la tarea.
         """
 
+        self.lista.append({"tarea": entrada, "completada": False})
+        self.guardar()
+        return Resultados.TAREA_AGREGADA, entrada
+    
+    def check(self, tarea):
+        """Buscar una tarea por nombre. Si una tarea ya existe en la lista, devolver un mensaje de aviso para no duplicarla."""
+
         for entrada in self.lista:
             if entrada["tarea"] == tarea:
-                return Resultados.TAREA_YA_EXISTE, tarea
-        self.lista.append({"tarea": tarea, "completada": False})
-        self.guardar()
-        return Resultados.TAREA_AGREGADA, tarea
+                return tarea
+        return None
 
     def completar(self, i):
         """Marcar una tarea como completada.

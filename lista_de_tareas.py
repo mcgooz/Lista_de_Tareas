@@ -88,17 +88,20 @@ def opcion_agregar(lista_tareas):
     while True:
         print(f"{resetear_linea}Introduce una tarea. Para volver atras, usa '0': ", end="")
         nombre_tarea = input()
+        nombre = nombre_tarea.strip()
         # 0 rompe del bucle para volver atras.
-        if nombre_tarea == "0":
+        if nombre == "0":
             break
-        # Si la entrada está vacía, se avisa y el usuario puede volver a intentar.
-        elif nombre_tarea == "":
+        # Si la entrada está vacía, se avisa al usuario para que vuelva a intentar.
+        elif nombre == "":
             aviso = f"{resetear_linea}{Avisos.aviso(Resultados.NINGUNA_ENTRADA, None)}"
             visualizacion(lista_tareas, aviso)
+        elif nombre == lista_tareas.check(nombre):
+            aviso = f"{resetear_linea}{Avisos.aviso(Resultados.TAREA_YA_EXISTE, nombre)}"
+            visualizacion(lista_tareas, aviso)
         else:
-            tarea_formatada = nombre_tarea.strip() # Quitar whitespace de la entrada.
-            lista_tareas.agregar(tarea_formatada)
-            aviso = f"{resetear_linea}{Avisos.aviso(Resultados.TAREA_AGREGADA, tarea_formatada)}"
+            lista_tareas.agregar(nombre)
+            aviso = f"{resetear_linea}{Avisos.aviso(Resultados.TAREA_AGREGADA, nombre)}"
             visualizacion(lista_tareas, aviso)
             return
 
