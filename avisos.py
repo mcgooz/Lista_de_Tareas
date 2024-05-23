@@ -1,8 +1,20 @@
 from resultados import Resultados
 
 class Avisos:
+    """Proporcionar mensajes de aviso basados en resultados de operaciones en ListaTareas."""
+
     @staticmethod
     def aviso(clave, *args):
+        """Devolver un mensaje de aviso correspondiente.
+        
+        Args:
+            clave (Resultados): La clave del resultado de la operación.
+            *args: Argumentos adicionales que se incluirán en el mensaje de aviso.
+        
+        Returns:
+            str: El mensaje de aviso correspondiente.
+        """
+
         mensajes = {
             Resultados.TAREA_AGREGADA: f"¡La tarea '{args[0]}' se ha agregado con éxito!",
             Resultados.TAREA_YA_EXISTE: f"La tarea '{args[0]}' ya existe.",
