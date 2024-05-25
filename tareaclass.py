@@ -103,23 +103,30 @@ class ListaTareas:
             return Resultados.NUMERO_INVALIDO, None
 
     def estado(self, tarea):
-        """Obtener el estado de una tarea formateado con colores ANSI.
+        """Obtener el estado de una tarea.
 
         Args:
-            tarea (dict): La tarea cuyo estado se quiere obtener.
+            tarea: La tarea cuyo estado se quiere obtener.
 
         Returns:
-            str: El estado formateado de la tarea.
+            str: El estado de la tarea.
         """
 
-        # Definir colores con códigos de ANSI.
-        verde = "\033[92m"
-        azul = "\033[94m"
-        negro = "\033[0m"  # Resetear color
         if not tarea["completada"]:
-            return azul + "Pendiente" + negro
+            return "Pendiente"
         elif tarea["completada"]:
-            return verde + "Completada" + negro
+            return "Completada"
+        
+    def terminado(self):
+        """Si todas tareas están completadas, devolver True"""
+
+        todas_completadas = True
+        for tarea in self.lista:
+            if not tarea["completada"]:
+                todas_completadas = False
+        if todas_completadas:
+            return True
+
 
     def tabular(self):
         """Crear y formatear la lista de tareas en una tabla.
@@ -127,10 +134,20 @@ class ListaTareas:
         Returns:
             str: La tabla formateada.
         """
+
+        # Definir colores con códigos de ANSI.
+        verde = "\033[92m"
+        azul = "\033[94m"
+        negro = "\033[0m"  # Resetear color
+        
         tabla = []
         encabezados = ["#", "Tarea", "Estado"]
         for indice, tarea in enumerate(self.lista, start=1):
             estado = self.estado(tarea)
+            if estado == "Pendiente":
+                estado = azul + estado + negro
+            elif estado == "Completada":
+                estado = verde + estado + negro
             tabla.append([indice, tarea["tarea"], estado])
         tabla = tabulate(tabla, headers=encabezados, tablefmt="fancy_grid")
         return tabla

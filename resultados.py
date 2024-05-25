@@ -12,3 +12,4 @@ class Resultados(Enum):
     NINGUNA_TAREA = 8
     NINGUNA_ENTRADA = 9
     OPCION_INVALIDA = 10
+    TODAS_COMPLETADAS = 11

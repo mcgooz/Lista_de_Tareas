@@ -26,6 +26,7 @@ class Avisos:
             Resultados.NUMERO_INVALIDO: f"Por favor, introduce un número.",
             Resultados.NINGUNA_TAREA: f"No hay ninguna tarea en la lista.",
             Resultados.NINGUNA_ENTRADA: f"No se ha introducido ninguna palabra.",
-            Resultados.OPCION_INVALIDA: f"* Por favor, elige una opción válida (1-4). *",
+            Resultados.OPCION_INVALIDA: f"* Por favor, elige una opción válida *",
+            Resultados.TODAS_COMPLETADAS: f"¡Todas las tareas ya están completadas!",
         }
         return mensajes.get(clave, "")

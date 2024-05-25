@@ -31,7 +31,7 @@ El archivo tareaclass.py utiliza:
 Con este programa, puedes agregar tareas, marcarlas como completadas y quitarlas. Tiene una visualización dinámica que actualiza después de cada operación.  
 El programa utiliza JSON para persistencia de datos, que permite guardar y recuperar tareas de un archivo. Esto asegura que la lista de tareas se mantiene entre sesiones.
 
-# English
+## English  
 ## Lista de Tareas (Todo List)  
 
 A program for creating and managing tasks.  
