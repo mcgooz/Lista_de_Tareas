@@ -6,18 +6,27 @@ import random
 import time
 
 
-# Codigos ANSI para resetear visualización.
-resetear_pantalla = "\033[H\033[J"
-resetear_linea = "\033[F\033[K"
+# Variables globales de ANSI para restablecer visualización.
+RESETEAR_PANTALLA = "\033[H\033[J"
+RESETEAR_LINEA = "\033[F\033[K"
 
 # Instanciar la clase y cargar lista guardada (si existe).
 lista_tareas = ListaTareas()
 lista_tareas.cargar()
 
 
+# Formular mensajes de aviso.
+def crear_aviso(resultado, *args, animo=None):
+    mensaje = Avisos.aviso(resultado, *args)
+    if animo is not None:
+        mensaje += " " + animo
+    aviso = f"{RESETEAR_LINEA}{mensaje}"
+    visualizacion(lista_tareas, aviso)
+
+
 # Mantener una visualización limpia y dinámica.
 def visualizacion(lista_tareas, aviso=None):
-    print(resetear_pantalla)
+    print(RESETEAR_PANTALLA)
     print(f"### LISTA DE TAREAS ###\n")
     print(f"====| {date.today()} |====\n")
 
@@ -31,7 +40,7 @@ def visualizacion(lista_tareas, aviso=None):
     # Imprimir aviso correspondiente.
     if aviso is not None:
         print(f"\n{aviso}")
-        time.sleep(1.6)  # Una pausa corta para leer el aviso.
+        time.sleep(1.66)  # Una pausa corta para leer el aviso.
 
 
 def opciones():
@@ -58,13 +67,13 @@ def main():
         "------\n"
         "=========================================================================================================\n"
     )
-    # Calcular longitud de la linea más larga para justificar texto al centro.
+    # Calcular longitud de la linea más larga para justificar el texto al centro.
     centrar = max(len(line) for line in intro.split("\n"))
     for line in intro.split("\n"):
         print(line.center(centrar))
     input("Pulsa Enter para continuar...\n")
 
-    # Bucle while permite que el programa sigue abierto hasta que se selccione la opción de salir.
+    # Bucle while permite que el programa siga abierto hasta que se selccione la opción de salir.
     while True:
         visualizacion(lista_tareas, aviso=None)
         print(f"Por favor, elige una opcion (1-4): ", end="")
@@ -80,36 +89,30 @@ def main():
             opcion_adios()
             break
         else:
-            aviso = f"{resetear_linea}{Avisos.aviso(Resultados.OPCION_INVALIDA, None)}"
-            visualizacion(lista_tareas, aviso)
+            crear_aviso(Resultados.OPCION_INVALIDA, None)
 
 
 ### Opciones ###
 
-
 def opcion_agregar(lista_tareas):
     while True:
         print(
-            f"{resetear_linea}Introduce una tarea. Para volver atras, usa '0': ", end=""
+            f"{RESETEAR_LINEA}Introduce una tarea. Para volver atras, usa '0': ", end=""
         )
         nombre_tarea = input()
         nombre = nombre_tarea.strip()
+
         # 0 rompe del bucle para volver atras.
         if nombre == "0":
             break
         # Si la entrada está vacía, se avisa al usuario para que vuelva a intentar.
         elif nombre == "":
-            aviso = f"{resetear_linea}{Avisos.aviso(Resultados.NINGUNA_ENTRADA, None)}"
-            visualizacion(lista_tareas, aviso)
+            crear_aviso(Resultados.NINGUNA_ENTRADA, None)
         elif nombre == lista_tareas.check(nombre):
-            aviso = (
-                f"{resetear_linea}{Avisos.aviso(Resultados.TAREA_YA_EXISTE, nombre)}"
-            )
-            visualizacion(lista_tareas, aviso)
+            crear_aviso(Resultados.TAREA_YA_EXISTE, nombre)
         else:
             lista_tareas.agregar(nombre)
-            aviso = f"{resetear_linea}{Avisos.aviso(Resultados.TAREA_AGREGADA, nombre)}"
-            visualizacion(lista_tareas, aviso)
+            crear_aviso(Resultados.TAREA_AGREGADA, nombre)
             return
 
 
@@ -124,13 +127,17 @@ def opcion_completar(lista_tareas):
     ]
     # Si no hay tareas en la lista, avisar y volver.
     if not lista_tareas.lista:
-        aviso = f"{resetear_linea}{Avisos.aviso(Resultados.NINGUNA_TAREA, None)}"
-        visualizacion(lista_tareas, aviso)
+        crear_aviso(Resultados.NINGUNA_TAREA, None)
+        return
+    
+    # Si todas las tareas listadas ya están completadas, avisar y volver.
+    elif lista_tareas.terminado():
+        crear_aviso(Resultados.TODAS_COMPLETADAS, None)
         return
 
     while True:
         print(
-            f"{resetear_linea}Introduce el número de la tarea completada. Para volver atras, usa '0': ",
+            f"{RESETEAR_LINEA}Introduce el número de la tarea completada. Para volver atras, usa '0': ",
             end="",
         )
         completada = input()
@@ -140,58 +147,50 @@ def opcion_completar(lista_tareas):
             resultado, tarea = lista_tareas.completar(completada)
             # Si el resultado es no_encontrada, avisar y intentar de nuevo.
             if resultado == Resultados.TAREA_NO_ENCONTRADA:
-                aviso = f"{resetear_linea}{Avisos.aviso(Resultados.TAREA_NO_ENCONTRADA, None)}"
-                visualizacion(lista_tareas, aviso)
+                crear_aviso(resultado, None)
             # Si el resultado es numero_invalido, avisar y intentar de nuevo.
             elif resultado == Resultados.NUMERO_INVALIDO:
-                aviso = (
-                    f"{resetear_linea}{Avisos.aviso(Resultados.NUMERO_INVALIDO, None)}"
-                )
-                visualizacion(lista_tareas, aviso)
-            # Si la tarea ya ha sido marcada como completada, avisar y volver a la pantalla principal.
+                crear_aviso(resultado, None)
+            # Si la tarea ya ha sido marcada como completada, avisar.
             elif resultado == Resultados.TAREA_YA_COMPLETADA:
-                aviso = f"{resetear_linea}{Avisos.aviso(Resultados.TAREA_YA_COMPLETADA, tarea)}"
-                visualizacion(lista_tareas, aviso)
-                break
+                crear_aviso(resultado, tarea)
+                if lista_tareas.terminado():
+                    break
             else:
                 # Utilizar random choice para añadir un mensaje de ánimo al aviso :)
-                aviso = f"{resetear_linea}{Avisos.aviso(Resultados.TAREA_COMPLETADA, tarea)} {random.choice(animos)}"
-                visualizacion(lista_tareas, aviso)
-                break
+                resultado = Resultados.TAREA_COMPLETADA
+                animo = random.choice(animos)
+                crear_aviso(resultado, tarea, animo=animo)
+                if lista_tareas.terminado():
+                    break
 
 
 def opcion_quitar(lista_tareas):
     # Si no hay tareas en la lista, avisar y volver atras.
     if not lista_tareas.lista:
-        aviso = f"{resetear_linea}{Avisos.aviso(Resultados.NINGUNA_TAREA, None)}"
-        visualizacion(lista_tareas, aviso)
+        crear_aviso(Resultados.NINGUNA_TAREA, None)
         return
     # Bucle while que permite que se intente de nuevo si el input no es valido.
     while True:
         print(
-            f"{resetear_linea}Introduce el número de la tarea que quieres quitar. Para volver atras, usa '0': ",
+            f"{RESETEAR_LINEA}Introduce el número de la tarea que quieres quitar. Para volver atras, usa '0': ",
             end="",
         )
         quitar = input()
         if quitar == "0":
             return
         else:
-            # Misma funcionalidad de función completar.
             resultado, tarea = lista_tareas.quitar(quitar)
             if resultado == Resultados.TAREA_NO_ENCONTRADA:
-                aviso = f"{resetear_linea}{Avisos.aviso(Resultados.TAREA_NO_ENCONTRADA, None)}"
-                visualizacion(lista_tareas, aviso)
+                crear_aviso(resultado, None)
             elif resultado == Resultados.NUMERO_INVALIDO:
-                aviso = (
-                    f"{resetear_linea}{Avisos.aviso(Resultados.NUMERO_INVALIDO, None)}"
-                )
-                visualizacion(lista_tareas, aviso)
+                crear_aviso(resultado, None)
             else:
-                aviso = (
-                    f"{resetear_linea}{Avisos.aviso(Resultados.TAREA_QUITADA, tarea)}"
-                )
-                visualizacion(lista_tareas, aviso)
-                break
+                crear_aviso(Resultados.TAREA_QUITADA, tarea)
+                if lista_tareas.lista:
+                    continue
+                else:
+                    break
 
 
 # Mensajes de despedida randomizados.
@@ -202,7 +201,7 @@ def opcion_adios():
         "¡Nos vemos pronto! 👍",
         "¡Hasta la próxima! ✌️",
     ]
-    print(f"{resetear_linea}{random.choice(mensajes)}\n")
+    print(f"{RESETEAR_LINEA}{random.choice(mensajes)}\n")
 
 
 if __name__ == "__main__":
