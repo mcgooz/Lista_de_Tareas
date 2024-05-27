@@ -4,27 +4,35 @@ see below for English
 
 Un programa para apuntar y gestionar tareas.  
 
-## Librerías  
+## Requisitos
 
-El programa principal, lista_de_tareas, utiliza los siguientes tres archivos:  
-- **tareaclass.py**: una clase que contiene la lista de tareas y sus métodos correspondientes.  
-- **avisos.py** y **resultados.py**: definen los mensajes de aviso para informar al usuario de cualquier (casi) error.  
+El programa principal, lista_de_tareas.py, hace uso de los tres archivos siguientes:  
+- **tareaclass.py** Una clase que contiene la lista de tareas y sus métodos correspondientes.  
+- **avisos.py** y **resultados.py**: Se utilizan para definir y gestionar las notificaciones que informarán al usuario de cualquier error de entrada.  
+
+También se utilizan las siguientes librerías:
+- *datetime* para mostrar la fecha.
+- *random* para mostrar mensajes aleatorios de ánimo y despedida.
 
 ```python
 from avisos import Avisos
 from resultados import Resultados
 from tareaclass import ListaTareas
+from datetime import date
+import random
 ```
 
-También se utiliza las librerías a continuación:
-- *datetime* para mostrar la fecha.
-- *random* para mostrar varios mensajes de ánimo y despedida.
-- *time* para dar un momento para leer los avisos.
+El archivo tareaclass.py hace uso de:
+- Los archivos **avisos.py** y **resultados.py**.  
+- *tabulate* para mostrar la lista en una tabla formateada.  
+- *json* para guardar y cargar los datos de un archivo json.  
 
-El archivo tareaclass.py utiliza:
-- *tabulate* para mostrar la lista de tareas en una tabla.
-- *json* para guardar y recuperar datos en un archivo json.
-
+```python
+from avisos import Avisos
+from resultados import Resultados
+from tabulate import tabular
+import json
+```
 
 ## Uso  
 
@@ -34,29 +42,37 @@ El programa utiliza JSON para persistencia de datos, que permite guardar y recup
 ## English  
 ## Lista de Tareas (Todo List)  
 
-A program for creating and managing tasks.  
+A program for creating and managing tasks. 
 
-## Libraries  
+## Requirements
 
-The main program, lista_de_tareas, makes use of the following three files:  
+The main program, lista_de_tareas.py, makes use of the following three files:  
 - **tareaclass.py** A class that contains the list of tasks and its corresponding methods.  
-- **avisos.py** and **resultados.py**: These define the notifications that will inform the user of (almost) any error.  
+- **avisos.py** and **resultados.py**: These are used to define and manage the notifications that will inform the user of any input error.  
+
+The following libraries are also utilised:
+- *datetime* to show the date.
+- *random* to show randomised messages of encouragement, and farewell.
 
 ```python
 from avisos import Avisos
 from resultados import Resultados
 from tareaclass import ListaTareas
+from datetime import date
+import random
 ```
 
-The following libraries are also utilised:
-- *datetime* to show the date.
-- *random* to show various messages of encouragement, and farewells.
-- *time* to allow for a moment to read the notification messages.
-
 The file tareaclass.py makes use of:
-- *tabulate* to show the list as a formatted table.
-- *json* to save and load the data in a json file.
+- The **avisos.py** y **resultados.py** files.  
+- *tabulate* to show the list as a formatted table.  
+- *json* to save and load the data in a json file.  
 
+```python
+from avisos import Avisos
+from resultados import Resultados
+from tabulate import tabulate
+import json
+```
 
 ## Usage
 

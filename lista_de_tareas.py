@@ -3,7 +3,6 @@ from resultados import Resultados
 from tareaclass import ListaTareas
 from datetime import date
 import random
-import time
 
 
 # Variables globales de ANSI para restablecer visualización.
@@ -40,7 +39,8 @@ def visualizacion(lista_tareas, aviso=None):
     # Imprimir aviso correspondiente.
     if aviso is not None:
         print(f"\n{aviso}")
-        time.sleep(1.66)  # Una pausa corta para leer el aviso.
+        input("Pulsa Enter para continuar...")
+        print(RESETEAR_LINEA, end="")
 
 
 def opciones():
